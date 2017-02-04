@@ -10,7 +10,15 @@ __status__ = "Development"
 
 import urllib
 import csv
+from inc import jour_prec
+
+
+
 from datetime import datetime
+
+
+
+
 
 
 # Classe permettant le débug couleur #
@@ -33,11 +41,13 @@ def TelechargerFichier(cheminDistant, cheminLocal):
 # On détermine le jour précédent #
 date = datetime.now()
 myList = []
-jour_precedent = format(int(date.strftime('%Y%m%d')) - 1)
-print "* Previous date : " + jour_precedent
+#jour_precedent = format(int(date.strftime('%Y%m%d'))
+date_precedante = jour_prec.un_jour_avant(int(date.strftime('%d')),int(date.strftime('%m')),int(date.strftime('%Y')))
+
+print "* Previous date : " + date_precedante
 # Construction de l'URL #
-urlNivoCsv = "https://donneespubliques.meteofrance.fr/donnees_libres/Txt/Nivo/nivo." + jour_precedent + ".csv"
-pathCsv = "dl/" + jour_precedent + ".csv"
+urlNivoCsv = "https://donneespubliques.meteofrance.fr/donnees_libres/Txt/Nivo/nivo." + date_precedante + ".csv"
+pathCsv = "dl/" + date_precedante + ".csv"
 TelechargerFichier(urlNivoCsv, pathCsv)
 
 # Lecture du CSV #
@@ -46,4 +56,5 @@ for row in myReader:
     myList.append(list(row))
 
 print myList[1][15]
+
 
